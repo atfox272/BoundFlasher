@@ -10,13 +10,15 @@ module bound_flasher(
 
         assign clk_div = clk;
 
-        //system_clock_generator clk_gen(
-        //      // Input
-        //      .clk(clk),
-        //      .rst_n(rst_n),
-        //      // Output
-        //      .clk_div(clk_div)
-        //);
+        system_clock_generator clk_gen(
+              // Input
+              .clk(clk),
+              .rst_n(rst_n),
+              .enable(1'b1),		// Enable
+	      .prescaler_sel(2'b00),	// Select source clock
+	      // Output
+              .clk_div(clk_div)
+        );
         system_control_block sys_ctl(
                 // Input
                 .clk(clk_div),
@@ -29,7 +31,7 @@ module bound_flasher(
         #(
                 .IN_WIDTH(32'd5)
         )
-        decoder_under_5to32
+        decoder
         (
                 // Input
                 .in(counter[4:0]),
