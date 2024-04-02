@@ -72,17 +72,14 @@ always_comb begin
                         counter_load_en = 1'b0;
                 end
         endcase
-        // Decoder for counting enable
+	// Decoder for counting enable
         case (main_state_n)
-                INIT_STATE:             count_state = COUNT_DIS;
-                ONLED0_15_STATE:        count_state = COUNT_UP_EN;
-                ONLED5_10_STATE:        count_state = COUNT_UP_EN;
-                ONLED0_5_STATE:         count_state = COUNT_UP_EN;
-                OFFLED15_5_STATE:       count_state = COUNT_DOWN_EN;
-                OFFLED10_0_STATE:       count_state = COUNT_DOWN_EN;
-                OFFLED5_0_STATE:        count_state = COUNT_DOWN_EN;
-                default:                count_state = COUNT_DIS;
+                INIT_STATE:             				count_state = COUNT_DIS;
+                ONLED0_15_STATE, ONLED5_10_STATE, ONLED0_5_STATE:	count_state = COUNT_UP_EN;
+                OFFLED15_5_STATE, OFFLED10_0_STATE, OFFLED5_0_STATE:	count_state = COUNT_DOWN_EN;
+                default:                				count_state = COUNT_DIS;
         endcase
+
 end
 
 endmodule
