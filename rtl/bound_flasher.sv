@@ -1,3 +1,5 @@
+// Name: Bound Flasher
+// Description: Top module of Bound Flasher
 module bound_flasher(
         // Input
         input           clk,            // Source Clock
@@ -14,9 +16,9 @@ module bound_flasher(
               // Input
               .clk(clk),
               .rst_n(rst_n),
-              .enable(1'b1),		// Enable
-	      .prescaler_sel(2'b00),	// Select source clock
-	      // Output
+              .enable(1'b1),            // Enable
+              .prescaler_sel(2'b00),    // Select source clock
+              // Output
               .clk_div(clk_div)
         );
         system_control_block sys_ctl(
@@ -31,7 +33,7 @@ module bound_flasher(
         #(
                 .IN_WIDTH(32'd5)
         )
-        decoder
+        decoder_under_5to32
         (
                 // Input
                 .in(counter[4:0]),
@@ -41,3 +43,4 @@ module bound_flasher(
         );
 
 endmodule
+

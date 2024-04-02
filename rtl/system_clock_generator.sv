@@ -1,3 +1,5 @@
+// Name: System Clock generator
+// Description: Generate clock
 module system_clock_generator
 #(
 	parameter PRESCALER_SELECT_W	= 2,	// Selector register's width
