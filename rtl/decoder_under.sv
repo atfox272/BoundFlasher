@@ -1,5 +1,5 @@
 // Block_name: Decoder
-// Description: Assert output pins whose index is smaller than or equal to input's value
+// Description: Assert output pins whose index is smaller than input's value
 // Example:
 //      Assume: IN_WIDTH = 2
 //              in  = 2'b10
@@ -22,5 +22,4 @@ generate
 endgenerate
 
 endmodule
-
 

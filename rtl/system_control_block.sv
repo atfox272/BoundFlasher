@@ -70,4 +70,3 @@ counter counter_register (
 
 endmodule
 
-

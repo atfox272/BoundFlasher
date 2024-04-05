@@ -1,4 +1,4 @@
-// Name: Next state generator
+/ Name: Next state generator
 // Description: Generate next state and some states of counter
 module next_state_generator(
         // Input
@@ -41,13 +41,13 @@ always_comb begin
                         end
                 end
                 ONLED5_10_STATE: begin
-                        if (counter == 5'd10) begin
+                        if (counter == 5'd11) begin
                                 main_state_n = OFFLED10_0_STATE;
                         end
                 end
                 OFFLED10_0_STATE: begin
                         if (kickback_match) begin
-                                counter_load = 5'd10;
+                                counter_load = 5'd11;
                                 counter_load_en = 1'b1;
                         end
                         else if (counter == 5'd0) begin
@@ -55,7 +55,7 @@ always_comb begin
                         end
                 end
                 ONLED0_5_STATE: begin
-                        if (counter == 5'd5) begin
+                        if (counter == 5'd6) begin
                                 main_state_n = OFFLED5_0_STATE;
                         end
                 end
@@ -72,15 +72,17 @@ always_comb begin
                         counter_load_en = 1'b0;
                 end
         endcase
-	// Decoder for counting enable
+
+        // Decoder for counting enable
         case (main_state_n)
-                INIT_STATE:             				count_state = COUNT_DIS;
-                ONLED0_15_STATE, ONLED5_10_STATE, ONLED0_5_STATE:	count_state = COUNT_UP_EN;
-                OFFLED15_5_STATE, OFFLED10_0_STATE, OFFLED5_0_STATE:	count_state = COUNT_DOWN_EN;
-                default:                				count_state = COUNT_DIS;
+                INIT_STATE:                                             count_state = COUNT_DIS;
+                ONLED0_15_STATE, ONLED5_10_STATE, ONLED0_5_STATE:       count_state = COUNT_UP_EN;
+                OFFLED15_5_STATE, OFFLED10_0_STATE, OFFLED5_0_STATE:    count_state = COUNT_DOWN_EN;
+                default:                                                count_state = COUNT_DIS;
         endcase
 
 end
+
 
 endmodule
 
