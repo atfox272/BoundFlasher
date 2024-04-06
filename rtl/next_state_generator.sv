@@ -1,4 +1,4 @@
-/ Name: Next state generator
+// Name: Next state generator
 // Description: Generate next state and some states of counter
 module next_state_generator(
         // Input
