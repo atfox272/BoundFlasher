@@ -1,41 +1,42 @@
-module kickback_match_generator_tb;
+module kickback_match_tb;
 
-reg             flick;
-reg             [4:0] counter;
+    // Parameters
+    parameter CLK_PERIOD = 10; // Clock period in ns
 
-wire     kickback_match;
+    // Signals
+    reg flick;
+    reg [4:0] counter;
+    wire kickback_match;
 
-kickback_match_generator kickback(
-    // Input
-    .flick(flick),
-    .counter(counter),
-    // Output
-    .kickback_match(kickback_match)
-);
+    // Instantiate the DUT
+    kickback_match_generator dut (
+        .flick(flick),
+        .counter(counter),
+        .kickback_match(kickback_match)
+    );
 
-initial begin
-    #20
-    flick <= 1'b0;
-    counter <= 5'd0;
+    // Clock generation
+    reg clk;
+    always #((CLK_PERIOD / 2)) clk = ~clk;
 
-    #20
-    counter <= 5'd5;
+    // Testbench behavior
+    initial begin
+        // Initial values
+        flick = 1'b0;
+        #20;
+        $display("time = %d   , flick = %b, counter = %d, kickback_match = %d", $time, flick, counter, kickback_match);
+        #20;
+        $display("time = %d   , flick = %b, counter = %d, kickback_match = %d", $time, flick, counter, kickback_match);
+        #20;
+        $display("time = %d   , flick = %b, counter = %d, kickback_match = %d", $time, flick, counter, kickback_match);
+        #20;
+        flick = 1'b1;
+         #20;
+        $display("time = %d   , flick = %b, counter = %d, kickback_match = %d", $time, flick, counter, kickback_match);
+         #20;
+        $display("time = %d   , flick = %b, counter = %d, kickback_match = %d", $time, flick, counter, kickback_match);
+        #200;
+        end
+    endmodule
 
-    #20
-    counter <= 5'd0;
-
-    #20
-    flick <= 1'b1;
-
-    #20
-    counter <= 5'd5;
-    #1000;
-    $finish;
-end
-
-always @(*) begin
-    $monitor ("time = %t, flick = %b, counter = %b, kickback_match = %b", $time, flick, counter, kickback_match);
-end
-
-endmodule
 
