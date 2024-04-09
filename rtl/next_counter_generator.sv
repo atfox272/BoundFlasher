@@ -10,6 +10,8 @@ module next_counter_generator(
         output logic    [4:0]   counter_n
 );
 
+`include "constants.h"
+
 logic [4:0] counter_inc;        // counter increasing
 logic [4:0] counter_dec;        // counter decreasing
 
@@ -23,10 +25,10 @@ always_comb begin
         if (counter_load_en) counter_n = counter_load;
         else begin
                 case(count_state)
-                        COUNT_DIS:      counter_n = COUNTER_INIT;
-                        COUNT_UP_EN:    counter_n = counter_inc;
-                        COUNT_DOWN_EN:  counter_n = counter_dec;
-                        default:        counter_n = counter;
+                        `COUNT_DIS:      counter_n = `COUNTER_INIT;
+                        `COUNT_UP_EN:    counter_n = counter_inc;
+                        `COUNT_DOWN_EN:  counter_n = counter_dec;
+                        default:         counter_n = counter;
                 endcase
         end
 end

@@ -1,6 +1,5 @@
 // Name: System Control Block
 // Description: System Controller
-`include "constants.sv"
 module system_control_block(
         // Input
         input                   clk,

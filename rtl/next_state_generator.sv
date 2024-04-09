@@ -13,61 +13,63 @@ module next_state_generator(
         output  logic   [1:0]   count_state     // wire - count freeze-up-down
 );
 
+`include "constants.h"
+
 always_comb begin
         // State generator
         main_state_n = main_state;
         counter_load = counter;
         counter_load_en = 1'b0;
-        count_state = COUNT_DIS;
+        count_state = `COUNT_DIS;
 
         case(main_state)
-                INIT_STATE: begin
+                `INIT_STATE: begin
                         if(flick) begin
-                                main_state_n = ONLED0_15_STATE;
+                                main_state_n = `ONLED0_15_STATE;
                         end
                 end
-                ONLED0_15_STATE: begin
+                `ONLED0_15_STATE: begin
                         if (counter == 5'd16) begin
-                                main_state_n = OFFLED15_5_STATE;
+                                main_state_n = `OFFLED15_5_STATE;
                         end
                 end
-                OFFLED15_5_STATE: begin
+                `OFFLED15_5_STATE: begin
                         if (kickback_match) begin
                                 counter_load = 5'd16;
                                 counter_load_en = 1'b1;
                         end
                         else if (counter == 5'd5) begin
-                                main_state_n = ONLED5_10_STATE;
+                                main_state_n = `ONLED5_10_STATE;
                         end
                 end
-                ONLED5_10_STATE: begin
+                `ONLED5_10_STATE: begin
                         if (counter == 5'd11) begin
-                                main_state_n = OFFLED10_0_STATE;
+                                main_state_n = `OFFLED10_0_STATE;
                         end
                 end
-                OFFLED10_0_STATE: begin
+                `OFFLED10_0_STATE: begin
                         if (kickback_match) begin
                                 counter_load = 5'd11;
                                 counter_load_en = 1'b1;
                         end
                         else if (counter == 5'd0) begin
-                                main_state_n = ONLED0_5_STATE;
+                                main_state_n = `ONLED0_5_STATE;
                         end
                 end
-                ONLED0_5_STATE: begin
+                `ONLED0_5_STATE: begin
                         if (counter == 5'd6) begin
-                                main_state_n = OFFLED5_0_STATE;
+                                main_state_n = `OFFLED5_0_STATE;
                         end
                 end
-                OFFLED5_0_STATE: begin
+                `OFFLED5_0_STATE: begin
                         if (counter == 5'd0) begin
-                                main_state_n = INIT_STATE;
+                                main_state_n = `INIT_STATE;
                                 counter_load = 5'b0;
                                 counter_load_en = 1'b1;
                         end
                 end
                 default: begin
-                        main_state_n = INIT_STATE;
+                        main_state_n = `INIT_STATE;
                         counter_load = 5'd0;
                         counter_load_en = 1'b0;
                 end
@@ -75,10 +77,10 @@ always_comb begin
 
         // Decoder for counting enable
         case (main_state_n)
-                INIT_STATE:                                             count_state = COUNT_DIS;
-                ONLED0_15_STATE, ONLED5_10_STATE, ONLED0_5_STATE:       count_state = COUNT_UP_EN;
-                OFFLED15_5_STATE, OFFLED10_0_STATE, OFFLED5_0_STATE:    count_state = COUNT_DOWN_EN;
-                default:                                                count_state = COUNT_DIS;
+                `INIT_STATE:                                            count_state = `COUNT_DIS;
+                `ONLED0_15_STATE, `ONLED5_10_STATE, `ONLED0_5_STATE:    count_state = `COUNT_UP_EN;
+                `OFFLED15_5_STATE, `OFFLED10_0_STATE, `OFFLED5_0_STATE: count_state = `COUNT_DOWN_EN;
+                 default:                                               count_state = `COUNT_DIS;
         endcase
 
 end
